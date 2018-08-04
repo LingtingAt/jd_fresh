@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="static/css/jdym.css?1">
+
+	<title>Document</title>
+	<style type="text/css">
+
+	</style>
+</head>
+<body>
+	{include file="wdjd/jdym.html"}
+	<div class="wddd_1">
+		<div class="bcbox">
+		
+		<div class="top">
+			<div id="btn_w">
+				<button style="background:lightgreen;width:120px;height:40px" onclick="show();">新增收货地址</button>
+			</div>
+			<div class=" behindbtn"><p>您已创建1 个收货地址，最多可创建20个</p></div>
+		</div>
+
+		<div class=" middle">
+			<div>
+				<br>
+				收货人： 王云<br>
+所在地区： 山东临沂市沂水县城区<br>
+地址： 沂城街道 大名城小区 南门<br>
+手机： 178****1656<br>
+固定电话：<br>
+电子邮箱：<br>
+			</div>
+			<div id="edit_box">
+			<a href="javascript:open();" id="edit" >编辑</a>
+		    </div>
+		</div>
+
+		<div class="top">
+			<div id="btn_w">
+				<button type="" href="" class="btn" style="background:lightgreen;width:120px;height:40px" onclick="show();" >新增收货地址</button>
+			</div>
+			<div class=" behindbtn"><p>您已创建1 个收货地址，最多可创建20个</p></div>
+		</div>
+	</div>
+	</div>
+
+<div id="float_box" style="display:none;left: 20%; top:10%; width:500px; height: 500px;text-align: center; background:white; position: absolute;border: 2px solid">
+  	<a href="javascript:close();">×</a>
+  	<div >
+  		收货人:<input type="" name=""><br>
+  		收货地址：<input type="" name="">
+  		<input type="submit" name="保存" style="">
+
+  	</div>
+</div>
+<div id="fe_box" style="display:none;left: 20%; top:10%; width:500px; height: 500px;text-align: center; background: white; position: absolute;border: 2px solid">
+	编辑框
+	<a href="javascript:close_edit();">×</a>
+</div>
+</div>
+<script type="text/javascript">
+	function show(){
+		document.getElementById('float_box').style.display="block";
+		
+	}
+	function open(){
+		document.getElementById('fe_box').style.display="block";
+		
+	}
+	function close(){
+		document.getElementById('float_box').style.display="none";
+		
+	}
+	function close_edit(){
+		document.getElementById('fe_box').style.display="none";
+		
+	}
+</script>
+
+</body>
+</html>

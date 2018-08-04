@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>生鲜详情页</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+
+
+	<script type="text/javascript" src="jquery.1.4.2-min.js"></script>
+	<script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<style>
+	body{font:12px/18px "宋体",arial,sans-serif;color:#585858;}
+	body,div,p,span,form,iframe,table,td,th,input,textarea,button,label,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,h6{margin:0;padding:0;}
+	h1,h2,h3,h4,h5,h6{font-size:100%; }
+	ul,ol,li,dl{list-style-type:none;}
+	em,i,dfn,cite,strong,small{font-style:normal;}
+	img{border:0;}
+	fieldset,button,input,select,option{vertical-align:middle;font:12px/18px "宋体",arial,sans-serif;}
+	table{border-collapse:collapse;border-spacing:0}
+	textarea{resize:none}
+	/* color */
+	a:link,a:visited{color:#575757;text-decoration:none;}
+	a:hover{color:#ef4165;text-decoration:none;}
+	a:active{color:#1d7400;}
+	/* clearfix */
+	.clearfix:after{ visibility:hidden; display:block; font-size:0; content:" "; clear:both; height:0;}
+	*html .clearfix{ zoom:1;}
+
+	.preview{width:400px; height:465px;}
+	/* smallImg */
+	.smallImg{position:relative; height:52px; margin-top:1px; background-color:#F1F0F0; padding:6px 5px; width:390px; overflow:hidden;float:left;}
+	.scrollbutton{width:14px; height:50px; overflow:hidden; position:relative; float:left; cursor:pointer; }
+	.scrollbutton.smallImgUp , .scrollbutton.smallImgUp.disabled{background:url(images/d_08.png) no-repeat;}
+	.scrollbutton.smallImgDown , .scrollbutton.smallImgDown.disabled{background:url(images/d_09.png) no-repeat; margin-left:375px; margin-top:-50px;}
+
+	#imageMenu {height:50px; width:360px; overflow:hidden; margin-left:0; float:left;}
+	#imageMenu li {height:50px; width:60px; overflow:hidden; float:left; text-align:center;}
+	#imageMenu li img{width:50px; height:50px;cursor:pointer;}
+	#imageMenu li#onlickImg img, #imageMenu li:hover img{ width:44px; height:44px; border:3px solid #959595;}
+	/* bigImg */
+	.bigImg{position:relative; float:left; width:350px; height:350px; overflow:hidden;}
+	.bigImg #midimg{width:400px; height:400px;}
+	.bigImg #winSelector{width:235px; height:210px;}
+	#winSelector{position:absolute; cursor:crosshair; filter:alpha(opacity=15); -moz-opacity:0.15; opacity:0.15; background-color:#000; border:1px solid #fff;}
+	/* bigView */
+	#bigView{position:absolute;border: 1px solid #959595; overflow: hidden; z-index:999;}
+	#bigView img{position:absolute;}
+	/*---------------------放大镜---------------------*/
+	span {
+		font-size: 16px;
+	}
+	a{
+		text-decoration: none;
+	}
+	em{
+		font-style: normal;
+	}
+
+	.col-md-7 .sku-name {
+		font: 700 16px Arial,"microsoft yahei";
+		color: #666;
+		padding-top: 10px;
+		line-height: 28px;
+		margin: 20px 0;
+	}
+	.summary_price{
+		position: relative;
+		background: #f3f3f3;
+	}
+	.summary_price .dd{
+		margin-left: 70px;
+	}
+	.top_price{
+		position: relative;
+		margin-bottom: 20px;
+	}
+	.top_price .dt{
+		margin-top: 5px;
+		line-height: 22px;
+		float: left;
+		padding-left: 10px;
+		font-family: simsun;
+		color: #999;
+	}
+
+	.top_price .dd .p-price{
+		color: #E4393C;
+		font-family: "microsoft yahei";
+		margin-right: 10px;
+	}
+	.top_price .p-price .price {
+		font-size: 22px;
+	}
+	.top_price .dd a{
+		color: #005aa0;
+		vertical-align: 2px;
+	}
+	.evalueate_box{
+		position: absolute;
+		right: 10px;
+		top: 8px;
+		color: #999;
+	}
+	.evalueate_box .evalueate{
+		border-left: solid 1px #e6e6e6;
+		text-align: center;
+		padding: 0 10px;
+		line-height: 15px;
+	}
+	.evalueate_box .evalueate p{
+		color: #999
+	}
+	.evalueate_box .evalueate a{
+		font: 14px verdana;
+		color: #005ea7;
+	}
+	.bottom_price .dt{
+		float: left;
+		padding-left: 10px;
+		font-family: simsun;
+		color: #999;
+		line-height: 30px;
+	}
+	.bottom_price .dd .top_box{
+		width: 100%;
+		display: flex;
+		margin-bottom: 10px;
+	}
+	.bottom_price .dd .top_box .prom-gift-label{
+		width: 75px
+	}
+	.bottom_price .dd .top_box em{
+		color: #df3033;
+		background: 0 0;
+		border: 1px solid #df3033;
+		padding: 2px 3px;
+		margin-right: 5px;
+		display: inline-block;
+		line-height: 16px;
+	}
+	.bottom_price .top_box .prom-gift-list{
+		width: 100%;
+		float: left;
+	}
+	.bottom_price .top_box .prom-gift-list .prom-gift-item{
+		padding: 0 5px;
+		float: left;
+	}
+	.bottom_price .top_box .prom-gift-list .prom-gift-item a{
+		float: left;
+		width: 25px;
+		height: 25px;
+		margin-right: 3px;
+	}
+	.bottom_price .top_box .prom-gift-list .prom-gift-item em{
+		font-size: 12px;
+		font-family: arial;
+		color: #e4393c;
+	}
+
+	.bottom_price .dd .bottom_box em{
+		color: #df3033;
+		background: 0 0;
+		border: 1px solid #df3033;
+		padding: 2px 3px;
+		margin-right: 5px;
+		display: inline-block;
+		line-height: 16px;
+	}
+	.bottom_price .dd .bottom_box .prom-gift-label{
+		display: flex;
+	}
+	.bottom_price .dd .bottom_box .prom-gift-label .e{
+		color: #666;
+		line-height: 18px;
+		margin-left: 25px
+	}
+	/*-----------------购买------------------*/
+	.buy{
+		margin-top: 35px;
+		margin-bottom: 20px;
+		padding: 0 10px;
+	}
+	.buy .choose-amount{
+		width: 58px;
+		height: 44px;
+		overflow: hidden;
+		border: 1px solid #ccc;
+		position: relative;
+		margin-right: 10px;
+		float: left;
+	}
+	.buy .choose-amount .wrap-input input{
+		display: block;
+		width: 43px;
+		height: 42px;
+		line-height: 42px;
+		position: absolute;
+		top: 1px;
+		left: 0;
+		border: none;
+		border: 0;
+		text-align: center;
+	}
+	.buy .choose-amount a{
+		display: block;
+		width: 15px;
+		text-align: center;
+		height: 22px;
+		line-height: 22px;
+		overflow: hidden;
+		background: #f1f1f1;
+		color: #666;
+		position: absolute;
+		right: -1px;
+		border: 1px solid #ccc;
+	}
+	.buy .choose-amount .wrap-input a:nth-child(3){
+		bottom: 0
+	}
+	.buy .btn_buy{
+		height: 46px;
+		line-height: 46px;
+		padding: 0 26px;
+		font-size: 18px;
+		font-family: "microsoft yahei";
+		font-weight: 700;
+		background-color: #df3033;
+		color: #fff;
+		display: inline-block;
+	}
+
+
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row" style="background-color: rgb(185, 176, 176); color: #fff;padding: 10px 25px;font-size: 14px; ">京东商品详情</div>
+
+		<div class="row">
+			<div class="col-md-4">
+
+				<div class="preview">
+					<div id="vertical" class="bigImg">
+					    <img src="static/image/597edf15Nbbf94ce4.jpg" width="400" height="400" alt="" id="midimg" />
+					    <div style="display:none;" id="winSelector"></div>
+					</div>
+					<div class="smallImg">
+					    <div class="scrollbutton smallImgUp disabled"></div>
+					    <div id="imageMenu">
+					        <ul>
+					            <li><img src="static/image/597edf15Nbbf94ce4.jpg" width="68" height="68" alt=""/></li>
+					            <li><img src="static/image/597edf1fN862113c2.jpg" width="68" height="68" alt=""/></li>
+					            <li><img src="https://img10.360buyimg.com/n1/jfs/t5674/318/8853380715/163255/69715f5a/597edab0N264055f8.jpg" width="68" height="68" alt=""/></li>
+					            <li><img src="https://img10.360buyimg.com/n1/jfs/t20491/267/2237294180/849467/d94d907f/5b4cbd1eNf41476c9.png" width="68" height="68" alt=""/></li>
+					            <li><img src="https://img10.360buyimg.com/n1/jfs/t5788/52/8700993184/563263/827abe7b/597edf1fN862113c2.jpg" width="68" height="68" alt=""/></li>
+	
+					        </ul>
+					    </div>
+					    <div class="scrollbutton smallImgDown"></div>
+					</div><!--smallImg end-->   
+					<div id="bigView" style="display:none;"><img width="800" height="900" alt="" src="" /></div>
+				</div>
+
+			</div>
+			<div class="col-md-7">
+				<div class="sku-name">泰和生活  国产优质青柠檬3斤 新鲜水果柠檬</div>
+				<div class="summary_price">
+					<div class="top_price">
+						<div class="dt">京东价</div>
+						<div class="dd">
+							<span class="p-price">
+								<span>￥</span><span class="price J-p-28100875455">9.90</span>
+							</span>
+							<a href="">降价通知</a>
+						</div>
+					</div>
+					<div class="evalueate_box">
+						<div class="evalueate">
+							<p>累积评价</p>
+							<a href="">300+</a>
+						</div>
+					</div>
+					<div class="bottom_price">
+						<div class="dt">促销</div>
+						<div class="dd">
+							<div class="top_box">
+								<span class="prom-gift-label">
+									<em>赠品</em>
+								</span>
+								<div class="prom-gift-list">
+									<div class="prom-gift-item">
+										<a href="">
+											<img src="https://img11.360buyimg.com/n1/s25x25_jfs/t15952/283/982674535/36405/7075d64c/5a45055eNcab0e970.jpg">
+										</a>
+										<em>x1</em>
+									</div>
+									<div class="prom-gift-item">
+										<a href="">
+											<img src="https://img11.360buyimg.com/n1/s25x25_jfs/t15952/283/982674535/36405/7075d64c/5a45055eNcab0e970.jpg">
+										</a>
+										<em>x1</em>
+									</div>
+									<div class="prom-gift-item">
+										<a href="">
+											<img src="https://img11.360buyimg.com/n1/s25x25_jfs/t15952/283/982674535/36405/7075d64c/5a45055eNcab0e970.jpg">
+										</a>
+										<em>x1</em>
+									</div>
+									<div class="J-gift-limit gift-limit">（赠完即止）</div>
+								</div>
+							</div>
+							<div class="bottom_box">
+								<span class="prom-gift-label">
+									<em>限制</em>
+									<div class="e">此价格不与套装优惠同时享受</div>
+								</span>
+							</div>
+						</div>						
+					</div>
+				</div>
+				<div class="buy">
+					<div class="choose-amount">
+						<div class="wrap-input">
+							<input type="text" name="">
+							<a href="">+</a>
+							<a href="">-</a>
+						</div>
+					</div>
+					<a href="" class="btn_buy">加入购物车</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<ul>
+				<li style="background-color: #e4393c; color: #fff;padding: 10px 25px;font-size: 14px;">店长推荐</li>
+			</ul>
+			<div class="row">
+				
+				<div v-for="n in 6" class="col-md-2" >
+					<img src="https://img13.360buyimg.com/n2/jfs/t20536/123/2395487695/252238/dccb14/5b543222N6970be9d.jpg" style="width:100%;" alt="">
+					<div style="color: #e4393c; font-size: 14px; font-family: Verdana;">￥19.90</div>								
+				</div>
+				
+			
+			</div>
+		</div>
+
+	</div>
+
+
+<script type="text/javascript">
+
+	new Vue({
+		el:'.container',
+		
+	})
+
+	$(document).ready(function(){
+	    // 图片上下滚动
+	    var count = $("#imageMenu li").length - 5; /* 显示 6 个 li标签内容 */
+	    var interval = $("#imageMenu li:first").width();
+	    var curIndex = 0;
+	    
+	    $('.scrollbutton').click(function(){
+	        if( $(this).hasClass('disabled') ) return false;
+	        
+	        if ($(this).hasClass('smallImgUp')) --curIndex;
+	        else ++curIndex;
+	        
+	        $('.scrollbutton').removeClass('disabled');
+	        if (curIndex == 0) $('.smallImgUp').addClass('disabled');
+	        if (curIndex == count-1) $('.smallImgDown').addClass('disabled');
+	        
+	        $("#imageMenu ul").stop(false, true).animate({"marginLeft" : -curIndex*interval + "px"}, 600);
+	    }); 
+	    // 解决 ie6 select框 问题
+	    $.fn.decorateIframe = function(options) {
+	        if ($.browser.msie && $.browser.version < 5) {
+	            var opts = $.extend({}, $.fn.decorateIframe.defaults, options);
+	            $(this).each(function() {
+	                var $myThis = $(this);
+	                //创建一个IFRAME
+	                var divIframe = $("<iframe />");
+	                divIframe.attr("id", opts.iframeId);
+	                divIframe.css("position", "absolute");
+	                divIframe.css("display", "none");
+	                divIframe.css("display", "block");
+	                divIframe.css("z-index", opts.iframeZIndex);
+	                divIframe.css("border");
+	                divIframe.css("top", "0");
+	                divIframe.css("left", "0");
+	                if (opts.width == 0) {
+	                    divIframe.css("width", $myThis.width() + parseInt($myThis.css("padding")) * 2 + "px");
+	                }
+	                if (opts.height == 0) {
+	                    divIframe.css("height", $myThis.height() + parseInt($myThis.css("padding")) * 2 + "px");
+	                }
+	                divIframe.css("filter", "mask(color=#fff)");
+	                $myThis.append(divIframe);
+	            });
+	        }
+	    }
+	    $.fn.decorateIframe.defaults = {
+	        iframeId: "decorateIframe1",
+	        iframeZIndex: -1,
+	        width: 0,
+	        height: 0
+	    }
+	    //放大镜视窗
+	    $("#bigView").decorateIframe();
+	    //点击到中图
+	    var midChangeHandler = null;
+	    
+	    $("#imageMenu li img").bind("click", function(){
+	        if ($(this).attr("id") != "onlickImg") {
+	            midChange($(this).attr("src").replace("small", "mid"));
+	            $("#imageMenu li").removeAttr("id");
+	            $(this).parent().attr("id", "onlickImg");
+	        }
+	    }).bind("mouseover", function(){
+	        if ($(this).attr("id") != "onlickImg") {
+	            window.clearTimeout(midChangeHandler);
+	            midChange($(this).attr("src").replace("small", "mid"));
+	            $(this).css({ "border": "3px solid #959595" });
+	        }
+	    }).bind("mouseout", function(){
+	        if($(this).attr("id") != "onlickImg"){
+	            $(this).removeAttr("style");
+	            midChangeHandler = window.setTimeout(function(){
+	                midChange($("#onlickImg img").attr("src").replace("small", "mid"));
+	            }, 1000);
+	        }
+	    });
+	    function midChange(src) {
+	        $("#midimg").attr("src", src).load(function() {
+	            changeViewImg();
+	        });
+	    }
+	    //大视窗看图
+	    function mouseover(e) {
+	        if ($("#winSelector").css("display") == "none") {
+	            $("#winSelector,#bigView").show();
+	        }
+	        $("#winSelector").css(fixedPosition(e));
+	        e.stopPropagation();
+	    }
+	    function mouseOut(e) {
+	        if ($("#winSelector").css("display") != "none") {
+	            $("#winSelector,#bigView").hide();
+	        }
+	        e.stopPropagation();
+	    }
+	    $("#midimg").mouseover(mouseover); //中图事件
+	    $("#midimg,#winSelector").mousemove(mouseover).mouseout(mouseOut); //选择器事件
+
+	    var $divWidth = $("#winSelector").width(); //选择器宽度
+	    var $divHeight = $("#winSelector").height(); //选择器高度
+	    var $imgWidth = $("#midimg").width(); //中图宽度
+	    var $imgHeight = $("#midimg").height(); //中图高度
+	    var $viewImgWidth = $viewImgHeight = $height = null; //IE加载后才能得到 大图宽度 大图高度 大图视窗高度
+
+	    function changeViewImg() {
+	        $("#bigView img").attr("src", $("#midimg").attr("src").replace("mid", "big"));
+	    }
+	    changeViewImg();
+	    $("#bigView").scrollLeft(0).scrollTop(0);
+	    function fixedPosition(e) {
+	        if (e == null) {
+	            return;
+	        }
+	        var $imgLeft = $("#midimg").offset().left; //中图左边距
+	        var $imgTop = $("#midimg").offset().top; //中图上边距
+	        X = e.pageX - $imgLeft - $divWidth / 2; //selector顶点坐标 X
+	        Y = e.pageY - $imgTop - $divHeight / 2; //selector顶点坐标 Y
+	        X = X < 0 ? 0 : X;
+	        Y = Y < 0 ? 0 : Y;
+	        X = X + $divWidth > $imgWidth ? $imgWidth - $divWidth : X;
+	        Y = Y + $divHeight > $imgHeight ? $imgHeight - $divHeight : Y;
+
+	        if ($viewImgWidth == null) {
+	            $viewImgWidth = $("#bigView img").outerWidth();
+	            $viewImgHeight = $("#bigView img").height();
+	            if ($viewImgWidth < 200 || $viewImgHeight < 200) {
+	                $viewImgWidth = $viewImgHeight = 800;
+	            }
+	            $height = $divHeight * $viewImgHeight / $imgHeight;
+	            $("#bigView").width($divWidth * $viewImgWidth / $imgWidth);
+	            $("#bigView").height($height);
+	        }
+	        var scrollX = X * $viewImgWidth / $imgWidth;
+	        var scrollY = Y * $viewImgHeight / $imgHeight;
+	        $("#bigView img").css({ "left": scrollX * -1, "top": scrollY * -1 });
+	        $("#bigView").css({ "top": 75, "left": $(".preview").offset().left + $(".preview").width() + 15 });
+
+	        return { left: X, top: Y };
+	    }
+	});
+</script>
+</body>
+</html>
