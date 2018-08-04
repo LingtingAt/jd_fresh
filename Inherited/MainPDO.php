@@ -49,7 +49,6 @@ class MainPDO
                 echo $query;
             }
         }
-      echo "succeed";
     }
     public function setValues($value)
     {

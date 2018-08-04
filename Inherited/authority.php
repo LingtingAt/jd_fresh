@@ -10,6 +10,10 @@ class authorityc extends control
 {
     function __construct()
     {
-
+        parent::__construct();
+        if (empty($_SESSION))
+        {
+            returnArray(31,"你还没有登陆，不能进行这个操作");
+        }
     }
 }

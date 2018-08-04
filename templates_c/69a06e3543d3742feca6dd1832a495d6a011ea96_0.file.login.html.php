@@ -1,13 +1,45 @@
+<?php
+/* Smarty version 3.1.30, created on 2018-08-04 09:02:23
+  from "D:\wamp64\www\php\day10\view\user\login.html" */
+
+/* @var Smarty_Internal_Template $_smarty_tpl */
+if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
+  'version' => '3.1.30',
+  'unifunc' => 'content_5b656b9f0f8427_58920602',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '69a06e3543d3742feca6dd1832a495d6a011ea96' => 
+    array (
+      0 => 'D:\\wamp64\\www\\php\\day10\\view\\user\\login.html',
+      1 => 1533368472,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+  ),
+),false)) {
+function content_5b656b9f0f8427_58920602 (Smarty_Internal_Template $_smarty_tpl) {
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>个人登陆</title>
 </head>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/core.js"></script>
-<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<?php echo '<script'; ?>
+ src="https://cdn.bootcss.com/jquery/3.3.1/core.js"><?php echo '</script'; ?>
+>
+<?php echo '<script'; ?>
+ src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"><?php echo '</script'; ?>
+>
+<?php echo '<script'; ?>
+ src="https://unpkg.com/element-ui/lib/index.js"><?php echo '</script'; ?>
+>
+<?php echo '<script'; ?>
+ src="https://unpkg.com/axios/dist/axios.min.js"><?php echo '</script'; ?>
+>
 <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
 <style>
@@ -153,7 +185,8 @@
 </div>
 </body>
 <div>
-    <script>
+    <?php echo '<script'; ?>
+>
         new Vue({
             el:"#app",
             data() {
@@ -226,12 +259,6 @@
                                 .then( (res)=> {
                                         this.status=res.data.status;
                                        this.backstage_validate=res.data.massage;
-                                    if (this.status===21)
-                                    {
-                                        setTimeout( () =>{
-                                            location.href=res.data.data;
-                                        },5000)
-                                    }
                                      })
                                 .catch(function (error) {
                                     console.log(error);
@@ -249,6 +276,8 @@
 
         })
 
-    </script>
+    <?php echo '</script'; ?>
+>
 </div>
-</html>
+</html><?php }
+}

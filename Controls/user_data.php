@@ -5,7 +5,7 @@
  * Date: 2018/8/3
  * Time: 17:19
  */
-class user_data extends control
+class user_data extends authorityc
 {
     public function address()
     {
