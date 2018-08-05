@@ -18,8 +18,19 @@
         margin: 0;
         padding: 0
     }
+    /*--------头部-------------------------*/
+    .col-md-3 .logo{
+    width: 200px;
+    height: 40px;
+    background: url(https://static.360buyimg.com/mtd/pc/fresh_v3/1.0.0/gb/images/mod_header_logo.png) 0 0 no-repeat;;
+    margin-top: 42px;
+    margin-bottom: 22px;
+}
+
+
+/*---------------------------------*/
     .container{position: relative;}
-    .container .row{background: url(static/image/fresh_seckill_head_bg.png) 0 0 no-repeat;height: 100px;}
+    .container .bj{background: url(static/image/fresh_seckill_head_bg.png) 0 0 no-repeat;height: 100px;}
     .container .row .col-md-2{padding: 40px 0 16px 60px;}
     .container .row .titles{font-size: 18px;color: #909090;}
     .container .row .time{font-size: 14px;color: #909090;}
@@ -324,7 +335,13 @@
         </el-header>
         <el-main style="background-color: #f0f0f8">
             <div class="container view">
-            <div class="row">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="logo"></div>
+                    </div>                    
+                </div>
+                
+            <div class="row bj">
 
                 <div @click="change_goods(0)" class="col-md-2">
                     <div class="titles" :class="{'aaa':box_code == 0}">早市抢鲜</div>
@@ -348,15 +365,15 @@
                 <div class="hdp_show_box">
                     <div class="hdp_box" v-if="box_code == 0" :style="
 				'margin-left:'+move_px[box_code]">
-
-                        <div class="list_box" v-for="n in 15">
-                            <a href="http://localhost/php/day10/index.php?control=goods&&action=information">
+                        <!-- <[foreach $goods_list as $list]> -->
+                        <div class="list_box">
+                            <a href="{$list.g_thumb}">
                                 <div class="ittem_price">
-                                    <span class="price_1">￥9.90</span>
+                                    <span class="price_1"><[$list.g_price]></span>
                                     <span class="price_2">￥29.9</span>
                                 </div>
                                 <img src="static/image/5af10e1fN5901e42f.jpg!q80.webp.jpg">
-                                <p class="item_name">爱拼鲜生 夏橙脐橙 6个装 单果约150-200g 橙子</p>
+                                <p class="item_name">{$list.g_name}</p>
                                 <div class="item_progress">
                                     <p class="item_progress_text">好评率98%</p>
                                 </div>
@@ -365,7 +382,7 @@
                                 </div>
                             </a>
                         </div>
-
+                        <!-- <[/foreach]> -->
                     </div>
                 </div>
 
